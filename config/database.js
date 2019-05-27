@@ -1,4 +1,4 @@
 module.exports = {
   database:
-    "mongodb+srv://backend:test@trainer-platform-rqagb.mongodb.net/test?retryWrites=true"
+    "mongodb+srv://backend:test@trainer-platform-rqagb.mongodb.net/Trainer-App?retryWrites=true"
 };
