@@ -138,7 +138,7 @@ router.get("/exercise/:id", checkJwt, function(req, res) {
   });
 });
 
-router.get("/workout-for-client/:id", checkJwt, function(req, res) {
+router.get("/workouts-for-client/:id", checkJwt, function(req, res) {
   const id = req.params.id;
   console.log("getting workouts for client:", id);
   const response = {};
