@@ -7,6 +7,7 @@ const Measurements = require("../models/measurementModel");
 const Exercises = require("../models/exerciseModel");
 const Workouts = require("../models/workoutModel");
 const History = require("../models/historyModel");
+const Trainers = require("../models/trainerModel");
 
 // This route doesn't need authentication
 // router.get("/public", function(req, res) {
@@ -31,6 +32,24 @@ const History = require("../models/historyModel");
 //   });
 // });
 
+router.get("/trainer-id/:email", checkJwt, function(req, res) {
+  const email = req.params.email;
+  console.log("getting id for trainer:", email);
+  const response = {};
+  Trainers.trainerByEmail(email, (err, trainer) => {
+    if (err) {
+      response.msg = err || "There was an error getting the trainer";
+      res.json(response);
+    } else {
+      console.log("GET request succeeded");
+      response.success = true;
+      response.data = trainer;
+
+      res.json(response);
+    }
+  });
+});
+
 router.get("/clients-for-trainer/:id", checkJwt, function(req, res) {
   const id = req.params.id;
   console.log("getting clients for trainer:", id);
@@ -42,7 +61,7 @@ router.get("/clients-for-trainer/:id", checkJwt, function(req, res) {
     } else {
       console.log("GET request succeeded");
       response.success = true;
-      response.clients = clients;
+      response.data = clients;
 
       res.json(response);
     }
@@ -60,7 +79,7 @@ router.get("/diets-for-client/:id", checkJwt, function(req, res) {
     } else {
       console.log("GET request succeeded");
       response.success = true;
-      response.diets = diets;
+      response.data = diets;
 
       res.json(response);
     }
@@ -78,7 +97,7 @@ router.get("/diet-goal-for-client/:id", checkJwt, function(req, res) {
     } else {
       console.log("GET request succeeded");
       response.success = true;
-      response.diets = diets;
+      response.data = diets;
 
       res.json(response);
     }
@@ -96,7 +115,7 @@ router.get("/measurements-for-client/:id", checkJwt, function(req, res) {
     } else {
       console.log("GET request succeeded");
       response.success = true;
-      response.measurements = measurements;
+      response.data = measurements;
 
       res.json(response);
     }
@@ -113,7 +132,7 @@ router.get("/exercises/", checkJwt, function(req, res) {
     } else {
       console.log("GET request succeeded");
       response.success = true;
-      response.exercises = exercises;
+      response.data = exercises;
 
       res.json(response);
     }
@@ -131,7 +150,7 @@ router.get("/exercise/:id", checkJwt, function(req, res) {
     } else {
       console.log("GET request succeeded");
       response.success = true;
-      response.exercises = exercises;
+      response.data = exercises;
 
       res.json(response);
     }
@@ -149,7 +168,7 @@ router.get("/workouts-for-client/:id", checkJwt, function(req, res) {
     } else {
       console.log("GET request succeeded");
       response.success = true;
-      response.workouts = workouts;
+      response.data = workouts;
 
       res.json(response);
     }
@@ -176,7 +195,7 @@ router.get(
       } else {
         console.log("GET request succeeded");
         response.success = true;
-        response.history = history;
+        response.data = history;
 
         res.json(response);
       }
@@ -204,7 +223,7 @@ router.get(
       } else {
         console.log("GET request succeeded");
         response.success = true;
-        response.history = history;
+        response.data = history;
 
         res.json(response);
       }
