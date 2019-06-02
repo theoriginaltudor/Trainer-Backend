@@ -175,6 +175,24 @@ router.get("/workouts-for-client/:id", checkJwt, function(req, res) {
   });
 });
 
+router.post("/create-workout", checkJwt, function(req, res) {
+  const workout = req.body;
+  console.log(workout);
+
+  const response = {};
+  Workouts.createNewWorkout(workout, (err, workouts) => {
+    if (err) {
+      response.msg = err || "There was an error creating the workouts";
+      res.json(response);
+    } else {
+      console.log("Post request succeeded");
+      response.success = true;
+
+      res.json(response);
+    }
+  });
+});
+
 router.get(
   "/history-for-client/:clientId/for-exercise/:exerciseId",
   checkJwt,

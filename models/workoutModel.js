@@ -20,5 +20,9 @@ WorkoutsSchema.statics.workoutForClient = (id, callback) => {
   Workouts.find(query, callback);
 };
 
+WorkoutsSchema.statics.createNewWorkout = (workout, callback) => {
+  Workouts.create(workout, callback);
+};
+
 const Workouts = mongoose.model("Workouts", WorkoutsSchema, "Workouts");
 module.exports = Workouts;
