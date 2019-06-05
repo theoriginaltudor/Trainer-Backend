@@ -18,7 +18,7 @@ mongoose.connection.on("error", err => {
 
 const app = express();
 
-app.use(cors({ origin: "http://localhost:4200" }));
+app.use(cors({ origin: ["http://localhost:4200", "http://localhost:8100"] }));
 
 app.use(bodyParser.json());
 app.use("/api", routes);

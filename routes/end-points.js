@@ -32,6 +32,10 @@ const Trainers = require("../models/trainerModel");
 //   });
 // });
 
+router.get("/test", (req, res) => {
+  res.json("Yesee");
+});
+
 router.get("/trainer-id/:email", checkJwt, function(req, res) {
   const email = req.params.email;
   console.log("getting id for trainer:", email);
