@@ -40,5 +40,24 @@ HistorySchema.statics.historyForClient = (clientId, workoutId, callback) => {
   History.find(query, callback);
 };
 
+HistorySchema.statics.addNew = (
+  clientId,
+  workoutId,
+  exerciseId,
+  newEntry,
+  callback
+) => {
+  newEntry = {
+    ...newEntry,
+    clientId: mongoose.Types.ObjectId(clientId),
+    workoutId: mongoose.Types.ObjectId(workoutId),
+    exerciseId: mongoose.Types.ObjectId(exerciseId)
+  };
+
+  const newHistory = new History(newEntry);
+
+  newHistory.save(callback);
+};
+
 const History = mongoose.model("History", HistorySchema, "Training-history");
 module.exports = History;

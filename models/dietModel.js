@@ -31,5 +31,18 @@ DietsSchema.statics.goalForClient = (id, callback) => {
   Diets.find(query, callback);
 };
 
+DietsSchema.statics.addNew = (id, newEntry, callback) => {
+  if (!newEntry.date || Object.keys(newEntry).length < 2) {
+    callback("Not meeting the minimum requirements!", []);
+    return;
+  }
+
+  newEntry = { ...newEntry, clientId: mongoose.Types.ObjectId(id) };
+
+  const newDiet = new Diets(newEntry);
+
+  newDiet.save(callback);
+};
+
 const Diets = mongoose.model("Diets", DietsSchema, "Diet");
 module.exports = Diets;

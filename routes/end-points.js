@@ -90,6 +90,26 @@ router.get("/diets-for-client/:id", checkJwt, function(req, res) {
   });
 });
 
+router.post("/new-diet/:id", checkJwt, function(req, res) {
+  const id = req.params.id;
+  console.log("new diet for client:", id);
+  const body = req.body;
+  // console.log(body);
+  const response = {};
+  Diets.addNew(id, body, (err, diets) => {
+    if (err) {
+      response.msg = err || "There was an error saving the diets";
+      res.json(response);
+    } else {
+      console.log("POST request succeeded");
+      response.success = true;
+      response.data = diets;
+
+      res.json(response);
+    }
+  });
+});
+
 router.get("/diet-goal-for-client/:id", checkJwt, function(req, res) {
   const id = req.params.id;
   console.log("getting diet goals for client:", id);
@@ -118,6 +138,26 @@ router.get("/measurements-for-client/:id", checkJwt, function(req, res) {
       res.json(response);
     } else {
       console.log("GET request succeeded");
+      response.success = true;
+      response.data = measurements;
+
+      res.json(response);
+    }
+  });
+});
+
+router.post("/new-measurement/:id", checkJwt, function(req, res) {
+  const id = req.params.id;
+  console.log("new measurement for client:", id);
+  const body = req.body;
+  // console.log(body);
+  const response = {};
+  Measurements.addNew(id, body, (err, measurements) => {
+    if (err) {
+      response.msg = err || "There was an error saving the measurements";
+      res.json(response);
+    } else {
+      console.log("POST request succeeded");
       response.success = true;
       response.data = measurements;
 
@@ -189,7 +229,7 @@ router.post("/create-workout", checkJwt, function(req, res) {
       response.msg = err || "There was an error creating the workouts";
       res.json(response);
     } else {
-      console.log("Post request succeeded");
+      console.log("POST request succeeded");
       response.success = true;
 
       res.json(response);
@@ -244,6 +284,32 @@ router.get(
         res.json(response);
       } else {
         console.log("GET request succeeded");
+        response.success = true;
+        response.data = history;
+
+        res.json(response);
+      }
+    });
+  }
+);
+
+router.post(
+  "/new-history-entry/:clientId/:workoutId/:exerciseId",
+  checkJwt,
+  function(req, res) {
+    const clientId = req.params.clientId;
+    const workoutId = req.params.workoutId;
+    const exerciseId = req.params.exerciseId;
+    console.log("new history for client:", clientId);
+    const body = req.body;
+    // console.log(body);
+    const response = {};
+    History.addNew(clientId, workoutId, exerciseId, body, (err, history) => {
+      if (err) {
+        response.msg = err || "There was an error saving the history";
+        res.json(response);
+      } else {
+        console.log("POST request succeeded");
         response.success = true;
         response.data = history;
 

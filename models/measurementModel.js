@@ -27,6 +27,19 @@ MeasurementsSchema.statics.measurementsForClient = (id, callback) => {
   Measurements.find(query, callback);
 };
 
+MeasurementsSchema.statics.addNew = (id, newEntry, callback) => {
+  if (!newEntry.date || Object.keys(newEntry).length < 2) {
+    callback("Not meeting the minimum requirements!", []);
+    return;
+  }
+
+  newEntry = { ...newEntry, clientId: mongoose.Types.ObjectId(id) };
+
+  const newMeasurement = new Measurements(newEntry);
+
+  newMeasurement.save(callback);
+};
+
 const Measurements = mongoose.model(
   "Measurements",
   MeasurementsSchema,
