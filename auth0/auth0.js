@@ -17,7 +17,7 @@ const checkJwt = jwt({
   }),
 
   // Validate the audience and the issuer.
-  audience: "https://trainer-app/api",
+  aud: "https://trainer-app/api",
   issuer: `https://dev-9svee43o.eu.auth0.com/`,
   algorithms: ["RS256"]
 });

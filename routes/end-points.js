@@ -54,6 +54,24 @@ router.get("/trainer-id/:email", checkJwt, function(req, res) {
   });
 });
 
+router.get("/client-id/:email", checkJwt, function(req, res) {
+  const email = req.params.email;
+  console.log("getting id for client:", email);
+  const response = {};
+  Clients.clientByEmail(email, (err, client) => {
+    if (err) {
+      response.msg = err || "There was an error getting the client";
+      res.json(response);
+    } else {
+      console.log("GET request succeeded");
+      response.success = true;
+      response.data = client;
+
+      res.json(response);
+    }
+  });
+});
+
 router.get("/clients-for-trainer/:id", checkJwt, function(req, res) {
   const id = req.params.id;
   console.log("getting clients for trainer:", id);

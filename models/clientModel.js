@@ -18,5 +18,10 @@ ClientsSchema.statics.removeClient = (id, callback) => {
   Clients.findByIdAndDelete(id, callback);
 };
 
+ClientsSchema.statics.clientByEmail = (email, callback) => {
+  const query = { email: email };
+  Clients.find(query, callback);
+};
+
 const Clients = mongoose.model("Clients", ClientsSchema, "Clients");
 module.exports = Clients;
