@@ -36,7 +36,7 @@ router.get("/test", (req, res) => {
   res.json("Yesee");
 });
 
-router.get("/trainer-id/:email", checkJwt, function(req, res) {
+router.get("/trainer-id/:email", /*checkJwt,*/ function(req, res) {
   const email = req.params.email;
   console.log("getting id for trainer:", email);
   const response = {};
@@ -54,7 +54,7 @@ router.get("/trainer-id/:email", checkJwt, function(req, res) {
   });
 });
 
-router.get("/client-id/:email", checkJwt, function(req, res) {
+router.get("/client-id/:email", /*checkJwt,*/ function(req, res) {
   const email = req.params.email;
   console.log("getting id for client:", email);
   const response = {};
@@ -72,7 +72,7 @@ router.get("/client-id/:email", checkJwt, function(req, res) {
   });
 });
 
-router.get("/clients-for-trainer/:id", checkJwt, function(req, res) {
+router.get("/clients-for-trainer/:id", /*checkJwt,*/ function(req, res) {
   const id = req.params.id;
   console.log("getting clients for trainer:", id);
   const response = {};
@@ -90,7 +90,7 @@ router.get("/clients-for-trainer/:id", checkJwt, function(req, res) {
   });
 });
 
-router.get("/diets-for-client/:id", checkJwt, function(req, res) {
+router.get("/diets-for-client/:id", /*checkJwt,*/ function(req, res) {
   const id = req.params.id;
   console.log("getting diets for client:", id);
   const response = {};
@@ -108,7 +108,7 @@ router.get("/diets-for-client/:id", checkJwt, function(req, res) {
   });
 });
 
-router.post("/new-diet/:id", checkJwt, function(req, res) {
+router.post("/new-diet/:id", /*checkJwt,*/ function(req, res) {
   const id = req.params.id;
   console.log("new diet for client:", id);
   const body = req.body;
@@ -128,7 +128,7 @@ router.post("/new-diet/:id", checkJwt, function(req, res) {
   });
 });
 
-router.get("/diet-goal-for-client/:id", checkJwt, function(req, res) {
+router.get("/diet-goal-for-client/:id", /*checkJwt,*/ function(req, res) {
   const id = req.params.id;
   console.log("getting diet goals for client:", id);
   const response = {};
@@ -146,7 +146,7 @@ router.get("/diet-goal-for-client/:id", checkJwt, function(req, res) {
   });
 });
 
-router.get("/measurements-for-client/:id", checkJwt, function(req, res) {
+router.get("/measurements-for-client/:id", /*checkJwt,*/ function(req, res) {
   const id = req.params.id;
   console.log("getting measurements for client:", id);
   const response = {};
@@ -164,7 +164,7 @@ router.get("/measurements-for-client/:id", checkJwt, function(req, res) {
   });
 });
 
-router.post("/new-measurement/:id", checkJwt, function(req, res) {
+router.post("/new-measurement/:id", /*checkJwt,*/ function(req, res) {
   const id = req.params.id;
   console.log("new measurement for client:", id);
   const body = req.body;
@@ -184,7 +184,7 @@ router.post("/new-measurement/:id", checkJwt, function(req, res) {
   });
 });
 
-router.get("/exercises/", checkJwt, function(req, res) {
+router.get("/exercises/", /*checkJwt,*/ function(req, res) {
   console.log("getting exercises list");
   const response = {};
   Exercises.allExercises((err, exercises) => {
@@ -201,9 +201,9 @@ router.get("/exercises/", checkJwt, function(req, res) {
   });
 });
 
-router.get("/exercise/:id", checkJwt, function(req, res) {
+router.get("/exercise/:id", /*checkJwt,*/ function(req, res) {
   const id = req.params.id;
-  console.log("getting exercises list for:", id);
+  console.log("getting exercise for:", id);
   const response = {};
   Exercises.oneExercise(id, (err, exercises) => {
     if (err) {
@@ -219,7 +219,25 @@ router.get("/exercise/:id", checkJwt, function(req, res) {
   });
 });
 
-router.get("/workouts-for-client/:id", checkJwt, function(req, res) {
+router.post("/exercise-list/", /*checkJwt,*/ function(req, res) {
+  const idList = req.body;
+  const response = {};
+  
+  Exercises.listExercises(idList, (err, exercises) => {
+    if (err) {
+      response.msg = err || "There was an error getting the exercises";
+      res.json(response);
+    } else {
+      console.log("GET request succeeded");
+      response.success = true;
+      response.data = exercises;
+
+      res.json(response);
+    }
+  });
+});
+
+router.get("/workouts-for-client/:id", /*checkJwt,*/ function(req, res) {
   const id = req.params.id;
   console.log("getting workouts for client:", id);
   const response = {};
@@ -237,7 +255,7 @@ router.get("/workouts-for-client/:id", checkJwt, function(req, res) {
   });
 });
 
-router.post("/create-workout", checkJwt, function(req, res) {
+router.post("/create-workout", /*checkJwt,*/ function(req, res) {
   const workout = req.body;
   console.log(workout);
 
@@ -257,7 +275,7 @@ router.post("/create-workout", checkJwt, function(req, res) {
 
 router.get(
   "/history-for-client/:clientId/for-exercise/:exerciseId",
-  checkJwt,
+  // checkJwt,
   function(req, res) {
     const clientId = req.params.clientId;
     const exerciseId = req.params.exerciseId;
@@ -285,7 +303,7 @@ router.get(
 
 router.get(
   "/history-for-client/:clientId/for-workout/:workoutId",
-  checkJwt,
+  // checkJwt,
   function(req, res) {
     const clientId = req.params.clientId;
     const workoutId = req.params.workoutId;
@@ -313,7 +331,7 @@ router.get(
 
 router.post(
   "/new-history-entry/:clientId/:workoutId/:exerciseId",
-  checkJwt,
+  // checkJwt,
   function(req, res) {
     const clientId = req.params.clientId;
     const workoutId = req.params.workoutId;
