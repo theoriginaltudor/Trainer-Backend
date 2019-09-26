@@ -32,6 +32,15 @@ HistorySchema.statics.historyForTrainer = (clientId, exerciseId, callback) => {
   };
   History.find(query, callback);
 };
+
+HistorySchema.statics.historyForExerciseInWorkout = (workoutId, exerciseId, callback) => {
+  const query = {
+    workoutId: mongoose.Types.ObjectId(workoutId),
+    exerciseId: mongoose.Types.ObjectId(exerciseId)
+  };
+  History.find(query, callback);
+};
+
 HistorySchema.statics.historyForClient = (clientId, workoutId, callback) => {
   const query = {
     clientId: mongoose.Types.ObjectId(clientId),

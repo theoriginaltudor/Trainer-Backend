@@ -274,19 +274,47 @@ router.post("/create-workout", /*checkJwt,*/ function(req, res) {
 });
 
 router.get(
-  "/history-for-client/:clientId/for-exercise/:exerciseId",
+  "/history-for-trainer/:clientId/for-exercise/:exerciseId",
   // checkJwt,
   function(req, res) {
     const clientId = req.params.clientId;
     const exerciseId = req.params.exerciseId;
     console.log(
-      "getting history for client:",
+      "getting history for trainer:",
       clientId,
       "for exercise:",
       exerciseId
     );
     const response = {};
     History.historyForTrainer(clientId, exerciseId, (err, history) => {
+      if (err) {
+        response.msg = err || "There was an error getting the history";
+        res.json(response);
+      } else {
+        console.log("GET request succeeded");
+        response.success = true;
+        response.data = history;
+
+        res.json(response);
+      }
+    });
+  }
+);
+
+router.get(
+  "/history-for-workout/:workoutId/for-exercise/:exerciseId",
+  // checkJwt,
+  function(req, res) {
+    const workoutId = req.params.workoutId;
+    const exerciseId = req.params.exerciseId;
+    console.log(
+      "getting history for workout:",
+      workoutId,
+      "for exercise:",
+      exerciseId
+    );
+    const response = {};
+    History.historyForExerciseInWorkout(workoutId, exerciseId, (err, history) => {
       if (err) {
         response.msg = err || "There was an error getting the history";
         res.json(response);
