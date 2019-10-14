@@ -22,6 +22,9 @@ const HistorySchema = mongoose.Schema({
   },
   date: {
     type: Date
+  },
+  setNo: {
+    type: Number
   }
 });
 
