@@ -71,5 +71,12 @@ HistorySchema.statics.addNew = (
   newHistory.save(callback);
 };
 
+HistorySchema.statics.purgeHistory = (clientId, callback) => {
+  const query = {
+    clientId: mongoose.Types.ObjectId(clientId)
+  }
+  History.deleteMany(query, callback);
+}
+
 const History = mongoose.model("History", HistorySchema, "Training-history");
 module.exports = History;

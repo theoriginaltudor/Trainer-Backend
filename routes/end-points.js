@@ -267,7 +267,7 @@ router.post("/create-workout", /*checkJwt,*/ function(req, res) {
     } else {
       console.log("POST request succeeded");
       response.success = true;
-
+      response.data = workouts;
       res.json(response);
     }
   });
@@ -382,5 +382,26 @@ router.post(
     });
   }
 );
+
+router.get("/remove-history/:clientId",
+function (req, res) {
+  const clientId = req.params.clientId;
+
+  console.log('Removing history for client:', clientId);
+
+  const response = {};
+  History.purgeHistory(clientId, (err, history) => {
+    if (err) {
+      response.msg = err || "There was an error saving the history";
+      res.json(response);
+    } else {
+      console.log("DELETE request succeeded");
+      response.success = true;
+      response.data = history;
+
+      res.json(response);
+    }
+  })
+})
 
 module.exports = router;
