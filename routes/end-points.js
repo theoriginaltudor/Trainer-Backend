@@ -8,6 +8,7 @@ const Exercises = require("../models/exerciseModel");
 const Workouts = require("../models/workoutModel");
 const History = require("../models/historyModel");
 const Trainers = require("../models/trainerModel");
+const Video = require("../models/videoModel");
 
 // This route doesn't need authentication
 // router.get("/public", function(req, res) {
@@ -402,6 +403,27 @@ function (req, res) {
       res.json(response);
     }
   })
-})
+});
+//TODO: use multer npm to get the file and then save it in a new folder called video
+router.get("/video-client/:clientId/for-workout/:workoutId", function (req, res) {
+  const clientId = req.params.clientId;
+  const workoutId = req.params.workoutId;
+
+  const response = {};
+  Video.videoForClient(clientId, workoutId, (err, video) => {
+    if (err) {
+      response.msg = err || "There was an error saving the video";
+      res.json(response);
+    } else {
+      console.log("GET request succeeded");
+      response.success = true;
+      response.data = video;
+
+      res.json(response);
+    }
+  })
+});
+
+//TODO: create route for creating a new list of videos and saving them locally
 
 module.exports = router;
